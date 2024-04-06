@@ -1,15 +1,15 @@
 import React from "react";
-import { useTodoContext } from "../Store/Provider";
+import { useTodoContext } from "../../Store/Provider";
 import { ClockLoader } from "react-spinners";
 
-const Home: React.FC = () => {
-  const { data } = useTodoContext();
+const Now_Playing: React.FC = () => {
+  const { playing } = useTodoContext();
 
   return (
     <div className="wrapper">
-      {data.length > 0 ? (
-        data.map((item) => (
-          <a href={`/upcoming_movie/${item.id}`} key={item.id} >
+      {playing.length > 0 ? (
+        playing.map((item) => (
+          <a href={`/Now_Playing_Movies/${item.id}`} key={item.id} >
             <div className="box" >
               <p className="heading">{item.title}</p>
               {item.poster_path && (
@@ -33,4 +33,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Now_Playing;
