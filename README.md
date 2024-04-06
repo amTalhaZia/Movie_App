@@ -1,3 +1,15 @@
+# data from   dummy  api
+# dynamic Routing
+# can  do  commment  then  delete and  then  can  do  edit  also  in  dynamic routing  portion
+# searching   functionality
+
+
+
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
