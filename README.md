@@ -1,6 +1,6 @@
 # data from   dummy  api
 # dynamic Routing
-# can  do  commment  then  delete and  then  can  do  edit  also  in  dynamic routing  portion
+# can  do  comment  then  delete and  then  can  do  edit   in  dynamic routing  portion
 # searching   functionality
 
 
