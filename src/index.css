@@ -1,57 +1,56 @@
-*{
-    margin: 0%;
-    padding: 0%;
-    background-color: black;
-    color: white;
+* {
+  margin: 0%;
+  padding: 0%;
+  background-color: black;
+  color: white;
+  text-decoration: none;
 }
 
-
 .wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .box {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: center;
-    width: 200px;
-    transition: transform 0.3s ease;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
 
-  .box:hover {
-    transform: scale(1.1);
-  }
-  
-  .heading {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .poster {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-  }
-  
+.box {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+}
 
-  
+.box:hover {
+  transform: scale(1.1);
+}
+
+.heading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.poster {
+  max-width: 100%;
+  height: auto;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
 /* details.css */
 .details-container {
   margin: 20px;
   padding: 20px;
-  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .details-content {
@@ -63,19 +62,84 @@
 .details-poster {
   max-width: 100%;
   height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
 .detail-heading {
   font-size: 24px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .detail-para {
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 20px;
+  text-align: justify;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
 
+/* details.css */
+.form_handler form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.form_handler input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form_handler button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #36d7b7;
+  color: white;
+  cursor: pointer;
+}
+
+.form_handler button:hover {
+  background-color: #2ea79e;
+}
+
+/* Playing_Todo component */
+.butons {
+  display: flex;
+}
+
+.playing-todo__container {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.playing-todo__box {
+  flex: 1 0 45%; 
+  padding: 10px;
+}
+
+.playing-todo__comment {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.playing-todo__date {
+  color: #888;
+  font-size: 0.5rem;
+}

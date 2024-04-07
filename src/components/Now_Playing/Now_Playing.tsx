@@ -9,8 +9,8 @@ const Now_Playing: React.FC = () => {
     <div className="wrapper">
       {playing.length > 0 ? (
         playing.map((item) => (
-          <a href={`/Now_Playing_Movies/${item.id}`} key={item.id} >
-            <div className="box" >
+          <a href={`/Now_Playing_Movies/${item.id}`} key={item.id}>
+            <div className="box">
               <p className="heading">{item.title}</p>
               {item.poster_path && (
                 <div>
