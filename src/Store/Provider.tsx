@@ -25,7 +25,10 @@ export interface Context {
   playing: Api[];
   todos: Todos[];
   handleChnage: (task: string) => void;
+  handleDelete: (id: string) => void;
+  editFunct: (id: string, comment : string) => void;
 }
+
 
 const TodoContext = createContext<Context | null>(null);
 
@@ -79,9 +82,28 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     setTodos([...todos, newTodo]);
   };
 
+    
+  // delete functionality
+
+  const handleDelete = (id: string) => {
+    setTodos(todos.filter((item) => item.id!== id));
+  };
+
+  //   update  functionality
+
+  // const  editFunct =(id :string) =>{
+  //   const find = todos.find((item)=>{
+  //     return item.id === id;
+  //   })
+  
+
+  // }
+
+  // use memo
+
   const contextValue = useMemo(
-    () => ({ data, popular, playing, handleChnage, todos }),
-    [data, popular, playing, todos]
+    () => ({ data, popular, playing, handleChnage, todos, handleDelete }),
+    [data, popular, playing, todos,]
   );
 
   return (

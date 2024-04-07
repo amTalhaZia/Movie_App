@@ -11,6 +11,8 @@ const Now_Playing_Details: React.FC = () => {
 
   const [comment, setComment] = useState("");
 
+  
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleChnage(comment);
@@ -49,7 +51,7 @@ const Now_Playing_Details: React.FC = () => {
           <button type="submit">Comment</button>
         </form>
          <div className="mappimg">
-           <Playing_Todo />
+           <Playing_Todo comment={comment}/>
          </div>
       </div>
     </div>

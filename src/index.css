@@ -143,3 +143,9 @@
   color: #888;
   font-size: 0.5rem;
 }
+
+
+.delet_btn :hover{
+  color: blue;
+  font-size: medium;
+}
