@@ -1,24 +1,18 @@
-import React, { useState } from "react";
+// Now_Playing_Details.tsx
+import React from "react";
 import { useTodoContext } from "../../Store/Provider";
 import { useParams } from "react-router-dom";
 import { ClockLoader } from "react-spinners";
 import Playing_Todo from "./Playing_Todo";
 
 const Now_Playing_Details: React.FC = () => {
-  const { playing, handleChnage } = useTodoContext();
+  const { playing, handleChnage, comment, setComment } = useTodoContext();
   const { id } = useParams<{ id: string }>();
   const selectedItem = playing.find((item) => item.id.toString() === id);
 
-  const [comment, setComment] = useState("");
-
-  
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleChnage(comment);
-    //  console.log(e);
-    //  console.log(comment);
-    setComment("");
+    handleChnage();
   };
 
   return (
@@ -50,9 +44,9 @@ const Now_Playing_Details: React.FC = () => {
           />
           <button type="submit">Comment</button>
         </form>
-         <div className="mappimg">
-           <Playing_Todo comment={comment}/>
-         </div>
+        <div className="mappimg">
+          <Playing_Todo />
+        </div>
       </div>
     </div>
   );

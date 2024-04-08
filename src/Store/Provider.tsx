@@ -19,16 +19,18 @@ export interface Todos {
   comment: string;
   date: string;
 }
+
 export interface Context {
   data: Api[];
   popular: Api[];
   playing: Api[];
   todos: Todos[];
-  handleChnage: (task: string) => void;
+  comment: string;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
+  handleChnage: () => void;
   handleDelete: (id: string) => void;
-  editFunct: (id: string, comment : string) => void;
+  handleEdit : (id:string)  =>   void;
 }
-
 
 const TodoContext = createContext<Context | null>(null);
 
@@ -37,22 +39,17 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
   const [popular, setPopular] = useState<Api[]>([]);
   const [playing, setPlaying] = useState<Api[]>([]);
   const [todos, setTodos] = useState<Todos[]>([]);
+  const [comment, setComment] = useState<string>("");
+  const [val, setVal] = useState<string>('')
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [upcomingResponse, popularResponse, nowPlayingResponse] =
-          await Promise.all([
-            axios.get(
-              "https://api.themoviedb.org/3/movie/upcoming?api_key=6b35286ff05254fa4653b05f349d185e"
-            ),
-            axios.get(
-              "https://api.themoviedb.org/3/movie/popular?api_key=6b35286ff05254fa4653b05f349d185e"
-            ),
-            axios.get(
-              "https://api.themoviedb.org/3/movie/now_playing?api_key=6b35286ff05254fa4653b05f349d185e"
-            ),
-          ]);
+        const [upcomingResponse, popularResponse, nowPlayingResponse] = await Promise.all([
+          axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=6b35286ff05254fa4653b05f349d185e"),
+          axios.get("https://api.themoviedb.org/3/movie/popular?api_key=6b35286ff05254fa4653b05f349d185e"),
+          axios.get("https://api.themoviedb.org/3/movie/now_playing?api_key=6b35286ff05254fa4653b05f349d185e"),
+        ]);
         setData(upcomingResponse.data.results);
         setPopular(popularResponse.data.results);
         setPlaying(nowPlayingResponse.data.results);
@@ -64,51 +61,71 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     fetchData();
   }, []);
 
-  // todo functionality
 
-  const handleChnage = (task: string) => {
-    const now = Date.now();
-    const formattedDate = new Date(now).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
+  // Add   functionality
+ 
+
+  const handleChnage = () => {
+    const update = todos.map((item) => {
+      if (item.id === val) {
+        return {
+          ...item,
+          comment: comment
+        };
+      }
+      return item;
     });
-
-    const newTodo = {
-      id: uuidv4(),
-      comment: task,
-      date: formattedDate,
-    };
-    setTodos([...todos, newTodo]);
+  
+    setTodos(update);
+    setComment('');
+  
+    if (!update.some((item) => item.id === val)) {
+      const now = Date.now();
+      const formattedDate = new Date(now).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+  
+      const newTodo = {
+        id: uuidv4(),
+        comment: comment,
+        date: formattedDate,
+      };
+      setTodos((prevTodos) => [...prevTodos, newTodo]);
+      setComment("");
+    }
   };
+  
 
-    
+
+
+
   // delete functionality
 
   const handleDelete = (id: string) => {
-    setTodos(todos.filter((item) => item.id!== id));
+    setTodos(todos.filter((item) => item.id !== id));
   };
 
-  //   update  functionality
 
-  // const  editFunct =(id :string) =>{
-  //   const find = todos.find((item)=>{
-  //     return item.id === id;
-  //   })
-  
+  // Edit functionality
 
-  // }
-
-  // use memo
+  const handleEdit = (id: string) => {
+    const  finding =  todos.find ((item) => item.id === id);
+    console.log(finding)
+    if (finding){
+      setComment(finding.comment);
+    }
+    setVal(id)
+  };
 
   const contextValue = useMemo(
-    () => ({ data, popular, playing, handleChnage, todos, handleDelete }),
-    [data, popular, playing, todos,]
+    () => ({ data, popular, playing, handleChnage, todos, handleDelete, comment, setComment,  handleEdit }),
+    [data, popular, playing, todos, comment]
   );
 
-  return (
-    <TodoContext.Provider value={contextValue}>{children}</TodoContext.Provider>
-  );
+
+  return <TodoContext.Provider value={contextValue}>{children}</TodoContext.Provider>;
 };
 
 export const useTodoContext = () => {

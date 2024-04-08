@@ -3,13 +3,11 @@ import { useTodoContext } from "../../Store/Provider";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 
-interface PlayingTodoProps {
-  comment: string;
-}
 
 
-const Playing_Todo: React.FC<PlayingTodoProps> = ({comment}) => {
-  const { todos, handleDelete} = useTodoContext();
+
+const Playing_Todo: React.FC = () => {
+  const { todos, handleDelete,handleEdit} = useTodoContext();
 
   return (
     <div className="playing-todo__container">
@@ -17,8 +15,8 @@ const Playing_Todo: React.FC<PlayingTodoProps> = ({comment}) => {
         <div key={item.id} className="playing-todo__box">
           <div className="butons">
             <p className="playing-todo__comment"  >{item.comment}</p>
-            <MdDeleteOutline  className="delet_btn"  onClick={()=>handleDelete(item.id)}  />
-            <FaRegEdit  className="delet_btn"  />
+            <MdDeleteOutline  className="delet_btn"   onClick={()=>handleDelete(item.id)}  />
+            <FaRegEdit  className="delet_btn " onClick={()=>handleEdit(item.id)}  />
           </div>
           <p className="playing-todo__date">{item.date}</p>
         </div>

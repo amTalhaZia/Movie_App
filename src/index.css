@@ -130,7 +130,7 @@
 }
 
 .playing-todo__box {
-  flex: 1 0 45%; 
+  flex: 1 0 45%;
   padding: 10px;
 }
 
@@ -144,8 +144,12 @@
   font-size: 0.5rem;
 }
 
+.delet_btn {
+  font-size: 1.1rem;
+  margin-left: 0.3rem;
+}
 
-.delet_btn :hover{
+.delet_btn :hover {
   color: blue;
   font-size: medium;
 }
