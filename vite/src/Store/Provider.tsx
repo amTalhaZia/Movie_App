@@ -19,6 +19,15 @@ export interface Todos {
   comment: string;
   date: string;
 }
+export interface Blog {
+  _id: string;
+  title: string;
+  description: string;
+  slug: string;
+  image: Array<{ url: string; metadata: { dimensions: string } }>;
+  about: Array<{ type: string; children: Array<{ text: string }> }>;
+}
+
 
 export interface Context {
   data: Api[];
@@ -29,7 +38,9 @@ export interface Context {
   setComment: React.Dispatch<React.SetStateAction<string>>;
   handleChnage: () => void;
   handleDelete: (id: string) => void;
-  handleEdit : (id:string)  =>   void;
+  handleEdit: (id: string) => void;
+  blog: Blog[]; // Corrected type
+  setBlog: React.Dispatch<React.SetStateAction<Blog[]>>; // Corrected type
 }
 
 const TodoContext = createContext<Context | null>(null);
@@ -40,7 +51,8 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
   const [playing, setPlaying] = useState<Api[]>([]);
   const [todos, setTodos] = useState<Todos[]>([]);
   const [comment, setComment] = useState<string>("");
-  const [val, setVal] = useState<string>('')
+  const [val, setVal] = useState<string>('');
+  const [blog, setBlog] = useState<Blog[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,10 +73,7 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     fetchData();
   }, []);
 
-
-  // Add   functionality
- 
-
+  // Add functionality
   const handleChnage = () => {
     const update = todos.map((item) => {
       if (item.id === val) {
@@ -75,10 +84,10 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
       }
       return item;
     });
-  
+
     setTodos(update);
     setComment('');
-  
+
     if (!update.some((item) => item.id === val)) {
       const now = Date.now();
       const formattedDate = new Date(now).toLocaleDateString("en-US", {
@@ -86,7 +95,7 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         day: "numeric",
         year: "numeric",
       });
-  
+
       const newTodo = {
         id: uuidv4(),
         comment: comment,
@@ -96,35 +105,38 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
       setComment("");
     }
   };
-  
 
-
-
-
-  // delete functionality
-
+  // Delete functionality
   const handleDelete = (id: string) => {
     setTodos(todos.filter((item) => item.id !== id));
   };
 
-
   // Edit functionality
-
   const handleEdit = (id: string) => {
-    const  finding =  todos.find ((item) => item.id === id);
+    const finding = todos.find((item) => item.id === id);
     console.log(finding)
-    if (finding){
+    if (finding) {
       setComment(finding.comment);
     }
     setVal(id)
   };
 
   const contextValue = useMemo(
-    () => ({ data, popular, playing, handleChnage, todos, handleDelete, comment, setComment,  handleEdit }),
-    [data, popular, playing, todos, comment]
+    () => ({
+      data,
+      popular,
+      playing,
+      handleChnage,
+      todos,
+      handleDelete,
+      comment,
+      setComment,
+      handleEdit,
+      blog, 
+      setBlog
+    }),
+    [data, popular, playing, todos, comment, blog]
   );
-
-
   return <TodoContext.Provider value={contextValue}>{children}</TodoContext.Provider>;
 };
 

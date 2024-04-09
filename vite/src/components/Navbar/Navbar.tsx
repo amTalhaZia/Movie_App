@@ -14,14 +14,9 @@ const Navbar: React.FC = () => {
       <NavLink className="navlink" to="/popular">
         Popular
       </NavLink>
-      <div className="search-container">
-        <form>
-          <input type="text" placeholder="Search...." className="input" />
-          <button className="search_button" type="submit">
-            Search
-          </button>
-        </form>
-      </div>
+      <NavLink className="navlink" to="/blog">
+        Blog
+      </NavLink>
     </div>
   );
 };
