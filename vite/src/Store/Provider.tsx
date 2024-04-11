@@ -24,8 +24,8 @@ export interface Blog {
   title: string;
   description: string;
   slug: string;
-  image: Array<{ url: string; metadata: { dimensions: string } }>;
-  about: Array<{ type: string; children: Array<{ text: string }> }>;
+  image: string;
+  about: { type: string; children: { text: string }[] }[]; // Array of objects
 }
 
 
@@ -39,8 +39,8 @@ export interface Context {
   handleChnage: () => void;
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  blog: Blog[]; // Corrected type
-  setBlog: React.Dispatch<React.SetStateAction<Blog[]>>; // Corrected type
+  blog: Blog[]; 
+  setBlog: React.Dispatch<React.SetStateAction<Blog[]>>; 
 }
 
 const TodoContext = createContext<Context | null>(null);

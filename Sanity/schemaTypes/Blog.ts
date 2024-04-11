@@ -19,7 +19,7 @@ export const Blog = defineType({
             type: 'string'
         }),
         defineField({
-            title: 'Blog  Description',
+            title: 'Blog Description',
             name: 'description',
             type: 'string'
         }),
@@ -36,8 +36,8 @@ export const Blog = defineType({
         defineField({
             title: 'About',
             name: 'about',
-            type: 'array', // corrected from "Array" to 'array'
-            of: [{ type: 'block' }] // specifying an array of blocks for rich text
+            type: 'array', 
+            of: [{ type: 'block' }] 
         })
     ]
 });

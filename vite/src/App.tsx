@@ -8,6 +8,7 @@ import HomeDetails from './components/Home_details';
 import Now_Playing from './components/Now_Playing/Now_Playing'
 import Now_Playing_Details from './components/Now_Playing/Now_Playing_Details';;
 import Blog from './Sanity_Client/Blog/Blog'
+import Blog_Slug from './Sanity_Client/Blog/Blog_Slug';
 
 
 const App:React.FC = () => {
@@ -22,6 +23,7 @@ const App:React.FC = () => {
         <Route path="/Now_Playing" element={<Now_Playing />} />
         <Route path="/Now_Playing_Movies/:id" element={<Now_Playing_Details />} />
         <Route path="/Blog" element={<Blog />} />
+        <Route path="/Blog_Slug/:slug" element={<Blog_Slug />} />
       </Routes>
     </div>
   )
