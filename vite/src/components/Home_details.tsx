@@ -1,12 +1,18 @@
 import React from 'react';
-import { useTodoContext } from '../Store/Provider';
 import { useParams } from 'react-router-dom';
 import { ClockLoader } from "react-spinners";
+import { useTodoContext } from '../Store/Provider';
+import Home_Todo from './Home_Todo';
 
-const HomeDetails: React.FC = () => {
-  const { data } = useTodoContext();
-  const { id } = useParams<{ id: string }>();
-  const selectedItem = data.find((item) => item.id.toString() === id);
+const Details: React.FC = () => {
+  const { popular, handleChnage, comment, setComment  } = useTodoContext();
+  const { id} = useParams<{ id: string }>();
+  const selectedItem = popular.find((item) => item.id.toString() === id);
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleChnage();
+  };
 
   return (
     <div className="details-container">
@@ -27,8 +33,22 @@ const HomeDetails: React.FC = () => {
           <ClockLoader color="#36d7b7" />
         </div>
       )}
+      <div className="form_handler">
+        <form onSubmit={submitHandler}>
+          <input
+            type="text"
+            placeholder="Do comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button type="submit">Comment</button>
+        </form>
+        <div className="mappimg">
+          <Home_Todo />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default HomeDetails;
+export default Details;

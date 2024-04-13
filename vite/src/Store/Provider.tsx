@@ -23,9 +23,11 @@ export interface Blog {
   _id: string;
   title: string;
   description: string;
-  slug: string;
+  slug: {
+    current: string;
+  };
   image: string;
-  about: { type: string; children: { text: string }[] }[]; // Array of objects
+  about: { type: string; children: { text: string }[] }[];
 }
 
 
@@ -39,8 +41,8 @@ export interface Context {
   handleChnage: () => void;
   handleDelete: (id: string) => void;
   handleEdit: (id: string) => void;
-  blog: Blog[]; 
-  setBlog: React.Dispatch<React.SetStateAction<Blog[]>>; 
+  blog: Blog[];
+  setBlog: React.Dispatch<React.SetStateAction<Blog[]>>;
 }
 
 const TodoContext = createContext<Context | null>(null);
@@ -75,27 +77,15 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
 
   // Add functionality
   const handleChnage = () => {
-    const update = todos.map((item) => {
-      if (item.id === val) {
-        return {
-          ...item,
-          comment: comment
-        };
-      }
-      return item;
-    });
-
-    setTodos(update);
-    setComment('');
-
-    if (!update.some((item) => item.id === val)) {
+    if (!val) {
+      // Add new comment
       const now = Date.now();
       const formattedDate = new Date(now).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric",
       });
-
+  
       const newTodo = {
         id: uuidv4(),
         comment: comment,
@@ -103,8 +93,25 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
       };
       setTodos((prevTodos) => [...prevTodos, newTodo]);
       setComment("");
+    } else {
+      const update = todos.map((item) => {
+        if (item.id === val) {
+          return {
+            ...item,
+            comment: comment
+          };
+        }
+        return item;
+      });
+  
+      setTodos(update);
+      setComment('');
+      setVal(''); 
     }
   };
+  
+
+
 
   // Delete functionality
   const handleDelete = (id: string) => {
@@ -117,8 +124,8 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
     console.log(finding)
     if (finding) {
       setComment(finding.comment);
+      setVal(id)
     }
-    setVal(id)
   };
 
   const contextValue = useMemo(
@@ -132,7 +139,7 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
       comment,
       setComment,
       handleEdit,
-      blog, 
+      blog,
       setBlog
     }),
     [data, popular, playing, todos, comment, blog]

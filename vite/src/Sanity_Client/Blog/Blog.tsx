@@ -25,7 +25,7 @@ const Blog: React.FC = () => {
           }
         }
       `);
-        setBlog(res);
+              setBlog(res);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       }
@@ -49,7 +49,7 @@ const Blog: React.FC = () => {
             <div className="blog-content">
               <h2 className="blog-item-title">{blogItem.title}</h2>
               <p className="blog-item-title">{blogItem.description}</p>
-              <Link to={`/blog_Slug/${blogItem.slug}`} className="blog-item-link">
+              <Link to={`/blog_Slug/${blogItem.slug.current}`} className="blog-item-link">                
                 Read More
               </Link>
             </div>
