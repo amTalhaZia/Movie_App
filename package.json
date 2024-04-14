@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@sanity/block-content-to-react": "^3.0.0"
+  }
+}

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useTodoContext } from '../../Store/Provider';
 import { Link } from 'react-router-dom';
 import client, { urlFor } from '../Sanity_Client';
+import { ClockLoader } from "react-spinners";
+
 
 const Blog: React.FC = () => {
   const { setBlog, blog } = useTodoContext();
@@ -10,22 +12,22 @@ const Blog: React.FC = () => {
     const fetchBlogData = async () => {
       try {
         const res = await client.fetch(`
-        *[_type == "blog"] {
-          _id,
-          title,
-          description,
-          slug,
-          image {
-            asset-> {
-              url,
-              metadata {
-                dimensions
+          *[_type == "blog"] {
+            _id,
+            title,
+            description,
+            slug,
+            image {
+              asset-> {
+                url,
+                metadata {
+                  dimensions
+                }
               }
             }
           }
-        }
-      `);
-              setBlog(res);
+        `);
+        setBlog(res);
       } catch (error) {
         console.error("Error fetching blog data:", error);
       }
@@ -33,6 +35,12 @@ const Blog: React.FC = () => {
 
     fetchBlogData();
   }, [setBlog]);
+
+  // Check if blog is not an array
+  if (!Array.isArray(blog)) {
+    return <div><ClockLoader color="#36d7b7" />
+    </div>;
+  }
 
   return (
     <div className="container">
